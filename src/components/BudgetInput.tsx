@@ -4,13 +4,17 @@ import { Card } from './ui/card';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { MapPin, DollarSign } from 'lucide-react';
+import { MapPin, DollarSign, Calendar } from 'lucide-react';
 
 interface BudgetInputProps {
   totalBudget: number;
   setTotalBudget: (budget: number) => void;
   selectedDestination: string;
   setSelectedDestination: (destination: string) => void;
+  travelDays: number;
+  setTravelDays: (days: number) => void;
+  travelNights: number;
+  setTravelNights: (nights: number) => void;
 }
 
 const destinations = [
@@ -26,7 +30,11 @@ const BudgetInput: React.FC<BudgetInputProps> = ({
   totalBudget,
   setTotalBudget,
   selectedDestination,
-  setSelectedDestination
+  setSelectedDestination,
+  travelDays,
+  setTravelDays,
+  travelNights,
+  setTravelNights
 }) => {
   return (
     <Card className="p-6 bg-white/80 backdrop-blur-sm border-0 shadow-lg">
@@ -59,6 +67,52 @@ const BudgetInput: React.FC<BudgetInputProps> = ({
           </Select>
         </div>
 
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Calendar className="h-4 w-4 text-blue-600" />
+            <Label className="text-sm font-medium text-gray-700">여행 기간</Label>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="nights" className="text-xs text-gray-600">
+                숙박 일수 (박)
+              </Label>
+              <Input
+                id="nights"
+                type="number"
+                min="1"
+                max="30"
+                placeholder="예: 3"
+                value={travelNights || ''}
+                onChange={(e) => setTravelNights(Number(e.target.value))}
+                className="text-center font-semibold"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="days" className="text-xs text-gray-600">
+                여행 일수 (일)
+              </Label>
+              <Input
+                id="days"
+                type="number"
+                min="1"
+                max="31"
+                placeholder="예: 4"
+                value={travelDays || ''}
+                onChange={(e) => setTravelDays(Number(e.target.value))}
+                className="text-center font-semibold"
+              />
+            </div>
+          </div>
+          {travelNights > 0 && travelDays > 0 && (
+            <div className="text-center">
+              <span className="text-sm text-blue-600 font-medium">
+                {travelNights}박 {travelDays}일 여행
+              </span>
+            </div>
+          )}
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="budget" className="text-sm font-medium text-gray-700">
             총 여행 예산 (원)
@@ -71,9 +125,14 @@ const BudgetInput: React.FC<BudgetInputProps> = ({
             onChange={(e) => setTotalBudget(Number(e.target.value))}
             className="text-lg font-semibold"
           />
+          {totalBudget > 0 && travelDays > 0 && (
+            <p className="text-xs text-gray-500">
+              1일 평균 예산: {Math.round(totalBudget / travelDays).toLocaleString()}원
+            </p>
+          )}
         </div>
 
-        {selectedDestination && totalBudget > 0 && (
+        {selectedDestination && totalBudget > 0 && travelDays > 0 && (
           <div className="p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border border-blue-200">
             <div className="flex items-center gap-2 mb-2">
               <MapPin className="h-4 w-4 text-blue-600" />
@@ -81,7 +140,10 @@ const BudgetInput: React.FC<BudgetInputProps> = ({
                 {destinations.find(d => d.value === selectedDestination)?.label}
               </span>
             </div>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 mb-1">
+              {travelNights}박 {travelDays}일 여행 • 총 예산 {totalBudget.toLocaleString()}원
+            </p>
+            <p className="text-xs text-blue-600">
               선택한 목적지와 예산으로 여행 계획을 세워보세요!
             </p>
           </div>

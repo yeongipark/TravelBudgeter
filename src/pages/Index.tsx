@@ -18,6 +18,8 @@ const Index = () => {
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const [expenses, setExpenses] = useState<ExpenseItem[]>([]);
   const [selectedDestination, setSelectedDestination] = useState<string>('');
+  const [travelDays, setTravelDays] = useState<number>(0);
+  const [travelNights, setTravelNights] = useState<number>(0);
 
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
   const remainingBudget = totalBudget - totalExpenses;
@@ -48,16 +50,31 @@ const Index = () => {
             <div className="text-center">
               <p className="text-blue-100 text-sm">총 예산</p>
               <p className="text-2xl font-bold">{totalBudget.toLocaleString()}원</p>
+              {travelDays > 0 && (
+                <p className="text-blue-200 text-xs mt-1">
+                  {travelNights}박 {travelDays}일 여행
+                </p>
+              )}
             </div>
             <div className="text-center">
               <p className="text-blue-100 text-sm">사용한 금액</p>
               <p className="text-2xl font-bold">{totalExpenses.toLocaleString()}원</p>
+              {totalBudget > 0 && (
+                <p className="text-blue-200 text-xs mt-1">
+                  {((totalExpenses / totalBudget) * 100).toFixed(1)}% 사용
+                </p>
+              )}
             </div>
             <div className="text-center">
               <p className="text-blue-100 text-sm">남은 예산</p>
               <p className={`text-2xl font-bold ${remainingBudget < 0 ? 'text-red-200' : 'text-green-200'}`}>
                 {remainingBudget.toLocaleString()}원
               </p>
+              {travelDays > 0 && remainingBudget > 0 && (
+                <p className="text-blue-200 text-xs mt-1">
+                  1일 평균 {Math.round(remainingBudget / travelDays).toLocaleString()}원
+                </p>
+              )}
             </div>
           </div>
           
@@ -102,6 +119,10 @@ const Index = () => {
                 setTotalBudget={setTotalBudget}
                 selectedDestination={selectedDestination}
                 setSelectedDestination={setSelectedDestination}
+                travelDays={travelDays}
+                setTravelDays={setTravelDays}
+                travelNights={travelNights}
+                setTravelNights={setTravelNights}
               />
               <ExpenseTracker 
                 expenses={expenses}
