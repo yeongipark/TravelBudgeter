@@ -1,73 +1,201 @@
-# Welcome to your Lovable project
+# 주제
 
-## Project info
+> “여행 예산을 기준으로 경비를 관리하고, 다른 사람들의 정보를 통해 효율적인 여행 계획을 세우는 서비스”
+> 
 
-**URL**: https://lovable.dev/projects/9de2288d-10c4-4ee3-a032-90a06eb29da4
+---
 
-## How can I edit this code?
+좋아요! 주신 아이디어를 바탕으로 각 항목에 맞게 정리해드릴게요.
 
-There are several ways of editing your application.
+## **📌 여러분의 서비스는 누가 사용하나요?**
 
-**Use Lovable**
+**사용자는 어떤 문제를 겪고 있나요?**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9de2288d-10c4-4ee3-a032-90a06eb29da4) and start prompting.
+**그 문제를 해결하기 위해 어떤 해결책을 생각하고 있나요?**
 
-Changes made via Lovable will be committed automatically to this repo.
+**사용자:** 여행을 준비하는 일반인 (특히 자유여행을 계획하는 20~40대)
 
-**Use your preferred IDE**
+**문제:**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- 여행 경비를 예측하고 조절하기 어렵다.
+- 항공권, 숙소, 관광지 가격이 적절한지 비교하기 어렵다.
+- 정보가 분산되어 있고, 다른 사람들의 여행 경비 데이터를 참고하기 어렵다.
+- 예산에 맞춰 여행 코스를 짜기 힘들다.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**해결책:**
 
-Follow these steps:
+- 예산 입력 후 사용 가능한 경비를 항목별로 실시간 계산
+- 다른 사용자들의 여행 경비와 코스 데이터를 열람해 참고 가능
+- 추천 여행지 및 코스를 통해 효율적인 여행 설계 가능
+- 사용자들이 입력한 데이터를 토대로, 해당 여행지의 평균 항공권 가격, 숙소 가격 총 경비를 보여준다.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## **📌 사용자로 시작하기**
 
-# Step 3: Install the necessary dependencies.
-npm i
+**서비스 이름 예시:**
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+**“예산 기반 여행 설계 서비스 - TravelBudgeter”**
 
-**Edit a file directly in GitHub**
+Travel(여행) + Budge(예산) + er(도와주는 도구)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## **📌 사용자는 누구인가?**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+| **사용자** | **사용자 정의** |
+| --- | --- |
+| 여행 준비자 | 국내/해외 자유여행을 준비하는 일반 사용자 |
+| 예산 비교자 | 다른 사람의 여행 비용을 참고하여 예산을 설정하려는 사용자 |
+| 여행 후기 공유자 | 자신의 여행 경비 및 코스를 공유하고 싶은 사용자 |
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## **📌 사용자를 알아보자**
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+| **사용자** | **사용자 니즈** |
+| --- | --- |
+| 여행 준비자 | 예산에 따른 경비 계산, 잔여 금액 확인, 경비 계획 저장 |
+| 예산 비교자 | 다른 사람의 여행지별 경비 및 코스 열람 |
+| 여행 후기 공유자 | 나의 여행 경비, 코스, 팁 공유 기능 |
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/9de2288d-10c4-4ee3-a032-90a06eb29da4) and click on Share -> Publish.
+## **📌 페르소나를 정해보자**
 
-## Can I connect a custom domain to my Lovable project?
+### **여행 준비자**
 
-Yes, you can!
+- 이름: 이지은
+- 나이: 29세
+- 직업: 회사원
+- 목표: 여름휴가를 알차게 보내기 위해 예산 내에서 여행을 계획하고 싶다
+- 니즈: 예산 입력 후 각 항목별로 지출 내역 관리, 다른 사람들의 예산 참고
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### **예산 비교자**
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- 이름: 김도윤
+- 나이: 33세
+- 직업: 프리랜서
+- 목표: 항공권과 숙소를 적정 가격에 예약하고 싶다
+- 니즈: 동일 여행지에서 다른 사람이 언제, 얼마에 예약했는지 알고 싶다
+
+### **여행 후기 공유자**
+
+- 이름: 박혜민
+- 나이: 25세
+- 직업: 대학생
+- 목표: 나의 여행 기록을 정리하고 공유하고 싶다
+- 니즈: 여행 코스 및 경비 기록 작성, 다른 사람들과 공유
+
+---
+
+## **📌 사용자 시나리오 제작하기**
+
+### **여행 준비자 시나리오**
+
+이지은은 여름휴가를 위해 예산 150만 원을 입력합니다.
+
+호텔 예약을 먼저 하고, 항공권과 관광지 티켓을 추가하면서 실시간으로 남은 예산이 표시됩니다.
+
+예산이 빠듯해지자, 다른 사용자의 비슷한 여행 코스를 확인하고, 경비를 조절하여 계획을 완성합니다.
+
+---
+
+## **📌 시나리오에서 요구사항 도출**
+
+| **페르소나** | **시나리오** | **요구사항** |
+| --- | --- | --- |
+| 여행 준비자 | 예산 입력 후 항목별 지출을 입력하며 잔여 예산 확인 | 1. 예산 입력 기능2. 항목별 지출 입력 기능3. 실시간 잔여 예산 계산 |
+| 예산 비교자 | 다른 사용자의 항공권, 숙소 예약 가격 열람 | 1. 사용자 여행 경비 데이터 열람 기능2. 항목별 가격 비교 기능 |
+| 여행 후기 공유자 | 나의 여행 기록을 작성하고 공유 | 1. 여행 코스/경비 등록 기능2. 코스 공유 기능3. 추천 기능 |
+
+---
+
+## **📌 사용자 스토리와 인수 조건**
+
+### **사용자 스토리 예시**
+
+“여행 준비자로서, 저는 예산 내에서 경비를 입력하고 남은 금액을 확인하고 싶습니다. 그래서 계획적인 여행을 할 수 있습니다.”
+
+**인수 조건 (예: 잔여 예산 표시 기능)**
+
+- Given: 사용자가 총 여행 예산을 입력하고 있다.
+- When: 사용자가 항공권/숙소/관광 지출을 입력한다.
+- Then: 시스템은 남은 예산을 실시간으로 계산하여 화면에 표시한다.
+
+---
+
+## **✅ 1. 핵심 가치 제안 (Value Proposition)**
+
+**“TravelBudgeter는 사용자의 여행 예산을 기준으로 경비를 효율적으로 계획하고,**
+
+**다른 사람들의 여행 데이터와 추천 코스를 참고하여 똑똑한 여행을 설계할 수 있도록 돕는 서비스입니다.”**
+
+> 🎯
+> 
+> 
+> **가치 요약:** “예산 내에서 가장 합리적인 여행을 설계하도록 돕는 개인 맞춤형 여행 경비 관리 도우미”
+> 
+
+---
+
+## **✅ 2. 핵심 기능 (Core Features)**
+
+| **기능명** | **설명** |
+| --- | --- |
+| **여행 예산 입력 및 실시간 경비 계산** | 사용자가 전체 여행 예산을 입력하면, 항목별 경비(숙소, 항공, 관광 등)를 입력할 때마다 잔여 예산을 자동 계산 |
+| **다른 사람의 여행 경비 정보 열람** | 여행지별 다른 사용자의 실제 지출 데이터를 통해 가격 비교 및 합리적 예산 설정 가능 |
+| **여행 코스 및 추천지 탐색** | 사용자들이 공유한 여행 코스 및 여행지를 열람하고, 나만의 여행 계획에 참고 |
+| **여행 계획 저장 및 수정** | 작성 중인 여행 경비 계획과 코스를 저장하고 수정 가능 |
+| **경비 시각화 기능 (예정)** | 항목별 지출을 차트 등으로 시각화하여 한눈에 예산 구성 파악 가능 |
+
+---
+
+## **✅ 3. 구현 범위 (Scope of Implementation**
+
+### **🎯 구현 목적**
+
+**실제 AI나 DB 없이, 사용자가 직접 입력한 예산 및 경비 항목에 따라 여행 예산 설계 흐름을 체험할 수 있는 정적 프로토타입 구현**
+
+---
+
+### **✅ 핵심 구현 범위**
+
+| **항목** | **설명** |
+| --- | --- |
+| **여행 예산 입력 UI** | 사용자가 총 예산(예: 100만원)을 입력할 수 있는 입력 필드 제공 |
+| **항목별 경비 입력 UI** | 호텔, 항공권, 관광지 등의 경비 항목을 입력할 수 있는 입력 필드 제공 |
+| **잔여 예산 실시간 계산 및 표시** | 항목별 경비 입력 시, 총 예산에서 차감된 **잔여 예산이 실시간으로 표시**됨 |
+| **다른 사람들의 경비 데이터 예시 제공 (Mocking)** | 정해진 여행지(ex. 도쿄, 파리 등)의 경비 평균값을 JSON 등으로 저장 후, 해당 여행지를 선택하면 표나 카드 형태로 시각화 |
+| **추천 코스 or 여행지 표시 (Mocking)** | 사용자가 특정 여행지를 선택하면, 해당 여행지의 추천 코스/여행지 데이터를 보여줌 |
+
+---
+
+### **🛠 기술 및 구현 기준**
+
+- ✅ HTML/CSS/JS 기반
+- ✅ 모든 데이터는 JSON 등으로 미리 정의된 목업(Mocking) 데이터 사용
+- ✅ 입력값은 로컬 상태로 관리
+- ✅ 계산 로직은 클라이언트 사이드에서 처리
+- ❌ AI 응답, 챗봇 형태, 자연어 입력 없음
+- ❌ 외부 API 호출 및 서버 통신 없음
+
+---
+
+### **💡 예시 인터페이스 구성**
+
+- 여행 예산 입력 필드
+- 항목별 지출 입력 (호텔/항공/관광 등)
+- 지출 입력했을 때 해당 여행지 평균 금액이 표시
+    - ex) 평균보다 ~~원 싸게 예약했어요!
+- 남은 예산 출력 영역
+- “도쿄” 선택 시 → 평균 경비 표시
+- “추천 코스 보기” 클릭 시 → 여행 코스 목록 출력
+
+### **🔄 향후 확장 고려 기능**
+
+- 📈 지출 내역 시각화 (그래프/도넛 차트 등)
+- 🧠 AI 기반 여행 코스 자동 추천 (예산 기반)
+- 🌍 실시간 환율 반영 (해외 여행 시)
+- 🗺️ 지도 기반 여행지 + 경비 탐색 기능
+- 🤝 사용자간 여행 공유, 평가, 댓글 기능
