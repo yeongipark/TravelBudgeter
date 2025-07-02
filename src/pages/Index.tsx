@@ -12,6 +12,7 @@ interface ExpenseItem {
   category: string;
   amount: number;
   description: string;
+  date: string;
 }
 
 const Index = () => {
@@ -129,12 +130,13 @@ const Index = () => {
                 setExpenses={setExpenses}
                 remainingBudget={remainingBudget}
                 selectedDestination={selectedDestination}
+                travelDays={travelDays}
               />
             </div>
           </TabsContent>
 
           <TabsContent value="comparison">
-            <TravelComparison selectedDestination={selectedDestination} />
+            <TravelComparison />
           </TabsContent>
 
           <TabsContent value="courses">
