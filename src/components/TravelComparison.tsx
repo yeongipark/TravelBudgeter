@@ -36,7 +36,7 @@ const TravelComparison: React.FC = () => {
     return {
       difference: Math.abs(difference),
       isHigher: value1 > value2,
-      isSame: Math.abs(difference) < 5 // 5% 이내는 비슷한 것으로 간주
+      isSame: Math.abs(difference) < 5
     };
   };
 

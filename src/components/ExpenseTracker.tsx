@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from './ui/card';
 import { Input } from './ui/input';
@@ -21,6 +20,7 @@ interface ExpenseTrackerProps {
   remainingBudget: number;
   selectedDestination: string;
   travelDays: number;
+  travelNights: number;
 }
 
 const categories = [
@@ -38,7 +38,8 @@ const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
   setExpenses,
   remainingBudget,
   selectedDestination,
-  travelDays
+  travelDays,
+  travelNights
 }) => {
   const [newExpense, setNewExpense] = useState({
     category: '',
@@ -55,11 +56,14 @@ const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
     date: ''
   });
 
-  // Generate date options based on travel days
+  // Generate date options based on travel nights (숙박 일수 기준으로 일차 생성)
   const generateDateOptions = () => {
     const dates = [];
     const today = new Date();
-    for (let i = 0; i < Math.max(travelDays, 7); i++) {
+    // 숙박 일수가 있으면 숙박일수+1일로, 없으면 최소 7일로 설정
+    const totalDays = travelNights > 0 ? travelNights + 1 : Math.max(travelDays, 7);
+    
+    for (let i = 0; i < totalDays; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       dates.push({
@@ -174,6 +178,12 @@ const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
       {/* Add New Expense */}
       <div className="space-y-4 mb-6 p-4 bg-gray-50 rounded-lg">
         <h3 className="font-medium text-gray-800">새 지출 추가</h3>
+        
+        {travelNights > 0 && (
+          <div className="text-sm text-blue-600 bg-blue-50 p-2 rounded">
+            {travelNights}박 {travelNights + 1}일 여행 기준으로 일차가 생성됩니다.
+          </div>
+        )}
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           <div>

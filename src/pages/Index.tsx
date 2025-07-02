@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import BudgetInput from '../components/BudgetInput';
 import ExpenseTracker from '../components/ExpenseTracker';
@@ -131,6 +130,7 @@ const Index = () => {
                 remainingBudget={remainingBudget}
                 selectedDestination={selectedDestination}
                 travelDays={travelDays}
+                travelNights={travelNights}
               />
             </div>
           </TabsContent>
