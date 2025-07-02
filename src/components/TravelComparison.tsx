@@ -168,7 +168,7 @@ const TravelComparison: React.FC = () => {
             <p className="text-xs text-gray-500">vs {dest2Data!.averageDays}일</p>
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Category Comparison */}
       <Card className="p-6 bg-white/80 backdrop-blur-sm">
