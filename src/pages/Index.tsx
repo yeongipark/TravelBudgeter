@@ -1,11 +1,15 @@
+
 import React, { useState } from 'react';
 import BudgetInput from '../components/BudgetInput';
 import ExpenseTracker from '../components/ExpenseTracker';
 import TravelComparison from '../components/TravelComparison';
 import RecommendedCourses from '../components/RecommendedCourses';
+import BudgetPlanner from '../components/BudgetPlanner';
+import TravelHistory from '../components/TravelHistory';
+import TravelShare from '../components/TravelShare';
 import { Card } from '../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Plane, Calculator, Users, MapPin } from 'lucide-react';
+import { Plane, Calculator, Users, MapPin, PiggyBank, History, Share } from 'lucide-react';
 
 interface ExpenseItem {
   category: string;
@@ -14,14 +18,21 @@ interface ExpenseItem {
   date: string;
 }
 
+interface BudgetPlan {
+  category: string;
+  plannedAmount: number;
+}
+
 const Index = () => {
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const [expenses, setExpenses] = useState<ExpenseItem[]>([]);
+  const [budgetPlan, setBudgetPlan] = useState<BudgetPlan[]>([]);
   const [selectedDestination, setSelectedDestination] = useState<string>('');
   const [travelDays, setTravelDays] = useState<number>(0);
   const [travelNights, setTravelNights] = useState<number>(0);
 
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+  const totalPlannedBudget = budgetPlan.reduce((sum, plan) => sum + plan.plannedAmount, 0);
   const remainingBudget = totalBudget - totalExpenses;
 
   return (
@@ -46,7 +57,7 @@ const Index = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Budget Overview */}
         <Card className="mb-8 p-6 bg-gradient-to-r from-blue-500 to-green-500 text-white">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
               <p className="text-blue-100 text-sm">총 예산</p>
               <p className="text-2xl font-bold">{totalBudget.toLocaleString()}원</p>
@@ -57,7 +68,16 @@ const Index = () => {
               )}
             </div>
             <div className="text-center">
-              <p className="text-blue-100 text-sm">사용한 금액</p>
+              <p className="text-blue-100 text-sm">계획 예산</p>
+              <p className="text-2xl font-bold">{totalPlannedBudget.toLocaleString()}원</p>
+              {totalBudget > 0 && (
+                <p className="text-blue-200 text-xs mt-1">
+                  {((totalPlannedBudget / totalBudget) * 100).toFixed(1)}% 계획
+                </p>
+              )}
+            </div>
+            <div className="text-center">
+              <p className="text-blue-100 text-sm">실제 지출</p>
               <p className="text-2xl font-bold">{totalExpenses.toLocaleString()}원</p>
               {totalBudget > 0 && (
                 <p className="text-blue-200 text-xs mt-1">
@@ -78,11 +98,25 @@ const Index = () => {
             </div>
           </div>
           
-          {/* Progress Bar */}
-          <div className="mt-6">
-            <div className="bg-white/20 rounded-full h-3">
+          {/* Progress Bars */}
+          <div className="mt-6 space-y-2">
+            <div className="flex justify-between text-sm text-blue-100">
+              <span>계획 예산</span>
+              <span>{((totalPlannedBudget / totalBudget) * 100).toFixed(1)}%</span>
+            </div>
+            <div className="bg-white/20 rounded-full h-2">
               <div 
-                className={`h-3 rounded-full transition-all duration-500 ${
+                className="bg-yellow-300 h-2 rounded-full transition-all duration-500"
+                style={{ width: `${Math.min((totalPlannedBudget / totalBudget) * 100, 100)}%` }}
+              />
+            </div>
+            <div className="flex justify-between text-sm text-blue-100">
+              <span>실제 지출</span>
+              <span>{((totalExpenses / totalBudget) * 100).toFixed(1)}%</span>
+            </div>
+            <div className="bg-white/20 rounded-full h-2">
+              <div 
+                className={`h-2 rounded-full transition-all duration-500 ${
                   totalExpenses > totalBudget ? 'bg-red-400' : 'bg-white'
                 }`}
                 style={{ width: `${Math.min((totalExpenses / totalBudget) * 100, 100)}%` }}
@@ -92,11 +126,19 @@ const Index = () => {
         </Card>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="budget" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-white/60 backdrop-blur-sm">
-            <TabsTrigger value="budget" className="flex items-center gap-2">
+        <Tabs defaultValue="budget-setup" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-7 bg-white/60 backdrop-blur-sm">
+            <TabsTrigger value="budget-setup" className="flex items-center gap-2">
               <Calculator className="h-4 w-4" />
-              예산 관리
+              예산 설정
+            </TabsTrigger>
+            <TabsTrigger value="budget-planning" className="flex items-center gap-2">
+              <PiggyBank className="h-4 w-4" />
+              예산 계획
+            </TabsTrigger>
+            <TabsTrigger value="expense-tracking" className="flex items-center gap-2">
+              <Calculator className="h-4 w-4" />
+              지출 관리
             </TabsTrigger>
             <TabsTrigger value="comparison" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
@@ -106,33 +148,48 @@ const Index = () => {
               <MapPin className="h-4 w-4" />
               추천 코스
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center gap-2">
-              <Plane className="h-4 w-4" />
-              분석
+            <TabsTrigger value="history" className="flex items-center gap-2">
+              <History className="h-4 w-4" />
+              여행 기록
+            </TabsTrigger>
+            <TabsTrigger value="share" className="flex items-center gap-2">
+              <Share className="h-4 w-4" />
+              공유하기
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="budget" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <BudgetInput 
-                totalBudget={totalBudget}
-                setTotalBudget={setTotalBudget}
-                selectedDestination={selectedDestination}
-                setSelectedDestination={setSelectedDestination}
-                travelDays={travelDays}
-                setTravelDays={setTravelDays}
-                travelNights={travelNights}
-                setTravelNights={setTravelNights}
-              />
-              <ExpenseTracker 
-                expenses={expenses}
-                setExpenses={setExpenses}
-                remainingBudget={remainingBudget}
-                selectedDestination={selectedDestination}
-                travelDays={travelDays}
-                travelNights={travelNights}
-              />
-            </div>
+          <TabsContent value="budget-setup">
+            <BudgetInput 
+              totalBudget={totalBudget}
+              setTotalBudget={setTotalBudget}
+              selectedDestination={selectedDestination}
+              setSelectedDestination={setSelectedDestination}
+              travelDays={travelDays}
+              setTravelDays={setTravelDays}
+              travelNights={travelNights}
+              setTravelNights={setTravelNights}
+            />
+          </TabsContent>
+
+          <TabsContent value="budget-planning">
+            <BudgetPlanner 
+              budgetPlan={budgetPlan}
+              setBudgetPlan={setBudgetPlan}
+              totalBudget={totalBudget}
+              selectedDestination={selectedDestination}
+            />
+          </TabsContent>
+
+          <TabsContent value="expense-tracking">
+            <ExpenseTracker 
+              expenses={expenses}
+              setExpenses={setExpenses}
+              remainingBudget={remainingBudget}
+              selectedDestination={selectedDestination}
+              travelDays={travelDays}
+              travelNights={travelNights}
+              budgetPlan={budgetPlan}
+            />
           </TabsContent>
 
           <TabsContent value="comparison">
@@ -143,40 +200,19 @@ const Index = () => {
             <RecommendedCourses selectedDestination={selectedDestination} />
           </TabsContent>
 
-          <TabsContent value="analytics">
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-4">지출 분석</h3>
-              {expenses.length > 0 ? (
-                <div className="space-y-4">
-                  {Object.entries(
-                    expenses.reduce((acc, expense) => {
-                      acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
-                      return acc;
-                    }, {} as Record<string, number>)
-                  ).map(([category, amount]) => {
-                    const percentage = totalExpenses > 0 ? (amount / totalExpenses) * 100 : 0;
-                    return (
-                      <div key={category} className="space-y-2">
-                        <div className="flex justify-between items-center">
-                          <span className="font-medium">{category}</span>
-                          <span className="text-lg font-bold text-blue-600">
-                            {amount.toLocaleString()}원 ({percentage.toFixed(1)}%)
-                          </span>
-                        </div>
-                        <div className="bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full transition-all duration-500"
-                            style={{ width: `${percentage}%` }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <p className="text-gray-500 text-center py-8">아직 지출 내역이 없습니다.</p>
-              )}
-            </Card>
+          <TabsContent value="history">
+            <TravelHistory />
+          </TabsContent>
+
+          <TabsContent value="share">
+            <TravelShare 
+              totalBudget={totalBudget}
+              budgetPlan={budgetPlan}
+              expenses={expenses}
+              selectedDestination={selectedDestination}
+              travelDays={travelDays}
+              travelNights={travelNights}
+            />
           </TabsContent>
         </Tabs>
       </div>
