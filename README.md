@@ -1,5 +1,5 @@
 # 배포 주소
-[travelBudgeter](https://travel-smart-budgets.lovable.app/)
+[TravelBudgeter](https://preview--budget-travel-compass.lovable.app/)
 
 # 주제
 
